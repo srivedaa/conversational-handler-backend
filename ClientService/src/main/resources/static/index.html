@@ -1,0 +1,138 @@
+<!-- <html>
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<style type="text/css">
+input.error, select.error {
+	border-color: red;
+}
+#status{
+max-width:242px;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(document).ready(()=>{
+	const getFormatType=(str)=>{
+		const firstCharCode=str.toUpperCase().charCodeAt(0);
+		if(firstCharCode>=65 && firstCharCode<=77){
+		  return 'json';
+		}else{
+		  return 'xml';
+		}
+	};
+	const isValid=()=>{
+		const username=$('#username').val();
+		const selectedEndpoint=$('#selectEndpoint').val();
+		if(!username.trim().length){
+			$('#username').addClass('error');
+			return false;
+		}else if((selectedEndpoint == 0)){
+			$('#username').removeClass('error');
+			$('#selectEndpoint').addClass('error');
+			return false;
+		}else{
+			$('#username').removeClass('error');
+			$('#selectEndpoint').removeClass('error');
+			return true;
+		}
+	};
+	
+	$('#submit').on('click',()=>{
+		const username=$('#username').val();
+		const selectedEndpoint=$('#selectEndpoint').val();
+		const format=getFormatType(username);
+		if(isValid()){
+		$.get(`/client/s${selectedEndpoint}`,{name:username,format},(status)=>{
+			if(status === 'success'){
+				$('#callsInfo > tbody').append(`<tr><td>s${selectedEndpoint}</td>\
+						<td>${username}</td>\
+						<td>${new Date().toLocaleString()}</td>
+						</tr>`);
+			}
+		}).fail((error)=>{
+			const {responseJSON}=error;
+			$('#callsInfo > tbody').append(`<tr><td>s${selectedEndpoint}</td>\
+					<td>${username}</td>\
+					<td>${new Date().toLocaleString()}</td>\
+					<td>${new Date().toLocaleString()}</td>\
+					<td>-</td>\
+					<td id='status'>${responseJSON.message}</td>\
+					</tr>`);
+		});
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+		<h1>Conversation Handler</h1>
+		<div class="row">
+			<div class="col">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1">@</span>
+					</div>
+					<input type="text" class="form-control" placeholder="Username"
+						aria-label="Username" aria-describedby="basic-addon1"
+						id="username">
+				</div>
+			</div>
+			<div class="col">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<label class="input-group-text" for="inputGroupSelectEndpoint">Service
+							Options</label>
+					</div>
+					<select class="custom-select" id="selectEndpoint">
+						<option value="0" selected>Choose the end point</option>
+						<option value="1">s1</option>
+						<option value="2">s2</option>
+						<option value="3">s3</option>
+						<option value="4">s4</option>
+						<option value="5">s5</option>
+						<option value="6">s6</option>
+						<option value="7">s7</option>
+						<option value="8">s8</option>
+						<option value="9">s9</option>
+						<option value="10">s10</option>
+					</select>
+				</div>
+			</div>
+			<div class="col">
+				<button type="button" class="btn btn-primary" id="submit">Submit</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<table id="callsInfo" class="table table-dark">
+					<thead>
+						<tr>
+							<th>Service Name</th>
+							<th>User Name</th>
+							<th>DateTime</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html> -->
